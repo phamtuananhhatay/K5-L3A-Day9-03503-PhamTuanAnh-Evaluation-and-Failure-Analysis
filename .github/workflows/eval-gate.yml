@@ -34,6 +34,8 @@ jobs:
       - run: python -m lab9.smoke
       - run: python -m pytest -q -m student -o addopts= -k "lab9 and not advanced"
       - run: python -m lab9.evalset --check
+      - name: Verify grader detection and false alarms
+        run: python -m lab9.mutation --detect --spec "$EVAL_SPEC"
       - name: Evaluate and gate the PR swarm
         shell: bash
         run: |
