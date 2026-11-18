@@ -19,6 +19,7 @@ PR từ `starter/d09` → `main` của repo nhóm. Chấm commit cuối trước
 ## Bằng chứng
 
 - [PR nộp bài #1, starter/d09 → main](https://github.com/phamtuananhhatay/K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis/pull/1).
+- [PR hoàn thiện checklist #2, kèm toàn bộ output kiểm chứng mới](https://github.com/phamtuananhhatay/K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis/pull/2). Kết quả CI của bản cập nhật nằm trong mục Checks của PR.
 - [CI Core và Advanced/Expert đã thành công](https://github.com/phamtuananhhatay/K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis/actions/runs/44138113551).
 - [Output script kiểm chứng](src/reports/validation_m6_m7.txt) có gate Core, detection, A/A, scorecard và từng trap.
 - [Eval card](docs/eval_card.md) và [PRD v1.1](docs/PRD_v1.1.md) ghi phạm vi, ngưỡng, trách nhiệm và giới hạn.
