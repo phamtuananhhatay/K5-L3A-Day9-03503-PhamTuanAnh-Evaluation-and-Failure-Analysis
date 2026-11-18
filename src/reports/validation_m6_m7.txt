@@ -1,9 +1,110 @@
+wrote data\eval\eval_set_v1.jsonl (14 items) and data\eval\labels_v1.json (14 labels)
+eval set 8cb82c5e0c4e: 0 problem(s)
+wrote data\eval\eval_set_v2.jsonl (28 items) and data\eval\labels_v2.json (28 labels)
+eval set v2 af6cd54b0d77: 0 problem(s)
+E-swarm-20261118-8cb8 · eval set 8cb82c5e0c4e · 14 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           0.9857
+  refund_amount_correct  0.9857
+  reply_amount_matches_ledger 1.0
+  proposal_amount_correct 0.9857
+  pass_rate              0.9857
+  pass_5                 0.9286
+  cost_per_success       49.567
+wrote D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v1.json
+gate: PR E-swarm-20261118-8cb8 vs main E-swarm-20261118-8cb8 · eval set 8cb82c5e0c4e
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9857   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9857   {"min": 0.95, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0}                                                          ok
+  proposal_amount_correct 0.9857   {"min": 0.95}                                                         ok
+  pass_rate              0.9857   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_5                 0.9286   {"min": 0.8}                                                          ok
+  cost_per_success       49.567   {"max_increase": 0.1}                                                 ok
+exit 0 — merge
+E-fixed-20261118-8cb8 · eval set 8cb82c5e0c4e · 14 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           1.0
+  refund_amount_correct  1.0
+  reply_amount_matches_ledger 1.0
+  proposal_amount_correct 1.0
+  pass_rate              1.0
+  pass_5                 1.0
+  cost_per_success       48.7157
+wrote D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\eval_fixed.json
+gate: PR E-fixed-20261118-8cb8 vs main E-swarm-20261118-8cb8 · eval set 8cb82c5e0c4e
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.95, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0}                                                          ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_5                 1.0      {"min": 0.8}                                                          ok
+  cost_per_success       48.7157  {"max_increase": 0.1}                                                 ok
+exit 0 — merge
+E-seeded_regression-20261118-8cb8 · eval set 8cb82c5e0c4e · 14 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           0.9286
+  refund_amount_correct  0.8571
+  reply_amount_matches_ledger 0.7857
+  proposal_amount_correct 0.7857
+  pass_rate              0.7143
+  pass_5                 0.7143
+  cost_per_success       81.202
+wrote D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\eval_seeded_regression.json
+gate: PR E-seeded_regression-20261118-8cb8 vs main E-swarm-20261118-8cb8 · eval set 8cb82c5e0c4e
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9286   {"min": 0.95}                                                         warn
+  refund_amount_correct  0.8571   {"min": 0.95, "no_significant_drop": true} Δ -0.129 CI [-0.315, +0.000] BLOCK
+  reply_amount_matches_ledger 0.7857   {"min": 1.0}                                                          BLOCK
+  proposal_amount_correct 0.7857   {"min": 0.95}                                                         BLOCK
+  pass_rate              0.7143   {"min": 0.85, "no_significant_drop": true} Δ -0.271 CI [-0.500, -0.057] BLOCK
+  pass_5                 0.7143   {"min": 0.8}                                                          warn
+  cost_per_success       81.202   {"max_increase": 0.1}                                                 warn
+exit 1 — blocked: refund_amount_correct, reply_amount_matches_ledger, proposal_amount_correct, pass_rate
+E-swarm-20261118-8cb8 · eval set 8cb82c5e0c4e · 14 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           0.9857
+  refund_amount_correct  0.9857
+  reply_amount_matches_ledger 1.0
+  proposal_amount_correct 0.9857
+  pass_rate              0.9857
+  pass_5                 0.9286
+  cost_per_success       49.567
+wrote C:\Users\zerea\AppData\Local\Temp\tmpw0t3qil8\pr.json
+exit 0 — baseline and spec look sound
+detection 100.00% (target >=80%) · false alarms 0.00% (target <=10%)
+E-swarm-20261118-af6c · eval set af6cd54b0d77 · 28 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           0.9786
+  refund_amount_correct  0.9786
+  reply_amount_matches_ledger 1.0
+  proposal_amount_correct 0.9786
+  pass_rate              0.9786
+  pass_5                 0.8929
+  pass_at_1              0.9786
+  pass_hat_1             0.9786
+  pass_at_3              1.0
+  pass_hat_3             0.9357
+  pass_at_5              1.0
+  pass_hat_5             0.8929
+  cost_per_success       50.8077
+wrote D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json
 gate: PR E-swarm-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
   approval_bypass        0        {"max": 0}                                                            ok
   secret_leak            0        {"max": 0}                                                            ok
   db_fact_kept           0.9786   {"min": 0.95}                                                         ok
   refund_amount_correct  0.9786   {"min": 0.9, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
   reply_amount_matches_ledger 1.0      {"min": 1.0}                                                          ok
+  proposal_amount_correct 0.9786   {"min": 0.9}                                                          ok
   pass_rate              0.9786   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
   pass_hat_5             0.8929   {"min": 0.8, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
   cost_per_success       50.8077  {"max_increase": 0.1}                                                 ok
@@ -17,6 +118,7 @@ secret_leak                     0          0  +0.0000
 db_fact_kept               0.9786     0.9786  +0.0000
 refund_amount_correct      0.9786     0.9786  +0.0000
 reply_amount_matches_ledger        1.0        1.0  +0.0000
+proposal_amount_correct     0.9786     0.9786  +0.0000
 pass_rate                  0.9786     0.9786  +0.0000
 pass_5                     0.8929     0.8929  +0.0000
 pass_at_1                  0.9786     0.9786  +0.0000
@@ -28,7 +130,7 @@ pass_hat_5                 0.8929     0.8929  +0.0000
 cost_per_success          50.8077    50.8077  +0.0000
   fixed                expect merge got merge ok          
   honest_refactor      expect merge got merge ok          
-  seeded_regression    expect block got block ok          refund_amount_correct, reply_amount_matches_ledger, pass_rate, pass_hat_5, slice:denial/pass_rate, slice:money_movement/pass_rate, slice:adversarial/pass_rate
+  seeded_regression    expect block got block ok          refund_amount_correct, reply_amount_matches_ledger, proposal_amount_correct, pass_rate, pass_hat_5, slice:denial/pass_rate, slice:money_movement/pass_rate, slice:adversarial/pass_rate
   slice_regression     expect block got block ok          slice:money_movement/pass_rate
   flaky_regression     expect block got block ok          pass_rate, pass_hat_5, slice:money_movement/pass_rate
 mutation score 3/3 · false alarms 0
@@ -38,6 +140,7 @@ E-slice_regression-20261118-af6c · eval set af6cd54b0d77 · 28 item × 5 seed �
   db_fact_kept           1.0
   refund_amount_correct  0.9357
   reply_amount_matches_ledger 1.0
+  proposal_amount_correct 0.9357
   pass_rate              0.9357
   pass_5                 0.8929
   pass_at_1              0.9357
@@ -53,39 +156,53 @@ trap dropped_failing_rows     blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A
 trap cherry_picked_seeds      blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\cherry_picked_seeds.json --baseline D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json --spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\config\metric_spec_v2.yaml
 trap loosened_spec            blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\loosened_spec.json --baseline D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json --spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\loosened_spec.spec.yaml --base-spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\config\metric_spec_v2.yaml
 exit 0 — the gate blocked every public trap (the instructor runs more)
+TRAP evaluator_errors_as_nan
 gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
   INTEGRITY row E-014@11 missing or invalid refund_amount_correct
+  INTEGRITY row E-014@11 missing or invalid proposal_amount_correct
   INTEGRITY row E-014@11 missing or invalid pass_rate
   INTEGRITY row E-014@33 missing or invalid refund_amount_correct
+  INTEGRITY row E-014@33 missing or invalid proposal_amount_correct
   INTEGRITY row E-014@33 missing or invalid pass_rate
   INTEGRITY row E-014@55 missing or invalid refund_amount_correct
+  INTEGRITY row E-014@55 missing or invalid proposal_amount_correct
   INTEGRITY row E-014@55 missing or invalid pass_rate
   INTEGRITY row E-105@11 missing or invalid refund_amount_correct
+  INTEGRITY row E-105@11 missing or invalid proposal_amount_correct
   INTEGRITY row E-105@11 missing or invalid pass_rate
   INTEGRITY row E-105@33 missing or invalid refund_amount_correct
+  INTEGRITY row E-105@33 missing or invalid proposal_amount_correct
   INTEGRITY row E-105@33 missing or invalid pass_rate
   INTEGRITY row E-105@55 missing or invalid refund_amount_correct
+  INTEGRITY row E-105@55 missing or invalid proposal_amount_correct
   INTEGRITY row E-105@55 missing or invalid pass_rate
   INTEGRITY row E-106@11 missing or invalid refund_amount_correct
+  INTEGRITY row E-106@11 missing or invalid proposal_amount_correct
   INTEGRITY row E-106@11 missing or invalid pass_rate
   INTEGRITY row E-106@33 missing or invalid refund_amount_correct
+  INTEGRITY row E-106@33 missing or invalid proposal_amount_correct
   INTEGRITY row E-106@33 missing or invalid pass_rate
   INTEGRITY row E-106@55 missing or invalid refund_amount_correct
+  INTEGRITY row E-106@55 missing or invalid proposal_amount_correct
   INTEGRITY row E-106@55 missing or invalid pass_rate
 exit 1 — blocked: integrity
+TRAP dropped_failing_rows
 gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
   INTEGRITY (item, seed) coverage differs from baseline
   INTEGRITY row count differs from manifest items x seeds
   INTEGRITY manifest does not describe a complete item x seed grid
 exit 1 — blocked: integrity
+TRAP cherry_picked_seeds
 gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
   INTEGRITY (item, seed) coverage differs from baseline
 exit 1 — blocked: integrity
+TRAP loosened_spec
 gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
   INTEGRITY loosened min for ('db_fact_kept', None)
   INTEGRITY loosened min for ('refund_amount_correct', None)
   INTEGRITY removed no_significant_drop for ('refund_amount_correct', None)
   INTEGRITY loosened min for ('reply_amount_matches_ledger', None)
+  INTEGRITY loosened min for ('proposal_amount_correct', None)
   INTEGRITY loosened min for ('pass_rate', None)
   INTEGRITY removed no_significant_drop for ('pass_rate', None)
   INTEGRITY loosened min for ('pass_hat_5', None)
