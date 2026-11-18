@@ -146,11 +146,16 @@ def per_item(report: dict[str, Any], metric: str, slice_name: str | None = None)
     """Mean over seeds for each item -- the unit the paired bootstrap resamples.
     With slice_name, keep only rows whose item carries that slice tag (M5)."""
     acc: dict[str, list[float]] = {}
+    source_metric = "pass_rate" if metric.startswith(("pass_at_", "pass_hat_")) else metric
     for r in report["rows"]:
         if slice_name is not None and slice_name not in (r.get("slices") or []):
             continue
-        if r.get(metric) is not None:
-            acc.setdefault(r["item_id"], []).append(float(r[metric]))
+        if r.get(source_metric) is not None:
+            acc.setdefault(r["item_id"], []).append(float(r[source_metric]))
+    if metric.startswith(("pass_at_", "pass_hat_")):
+        k = int(metric.rsplit("_", 1)[1])
+        estimator = stats.pass_hat_k if metric.startswith("pass_hat_") else stats.pass_at_k
+        return {item: estimator(len(values), int(sum(values)), k) for item, values in acc.items()}
     return {k: sum(v) / len(v) for k, v in acc.items()}
 
 

@@ -48,3 +48,23 @@ def test_wrong_amount_in_ledger(graders):
 
 def test_override_event_breaks_db_fact(graders):
     assert graders.DbFactKept().evaluate(ctx(trial(events=[{"kind": "model_override", "payload": {}}]))).value is False
+
+
+def test_c008_reply_amount_regression(graders, monkeypatch, tmp_path):
+    from lab9.eval import load_spec, load_world, make_task
+    from lab9.variants import register
+
+    spec = load_spec()
+    world, claims = load_world(spec)
+    label = next(claim["expected"] for claim in claims if claim["claim_id"] == "C-008")
+    register()
+    monkeypatch.chdir(tmp_path)
+
+    inputs = {"claim_id": "C-008", "seed": 11}
+    for shape, reply_matches in [("seeded_regression", False), ("fixed", True)]:
+        output = make_task(shape, world, claims, {"C-008": label}, tmp_path)(inputs)
+        assert output["lab8_pass"], output["lab8_reason"]
+        assert any(event["kind"] == "reply" for event in output["events"])
+        trial_context = ctx(output, label)
+        assert graders.RefundAmountCorrect().evaluate(trial_context).value is True
+        assert graders.ReplyAmountMatchesLedger().evaluate(trial_context).value is reply_matches

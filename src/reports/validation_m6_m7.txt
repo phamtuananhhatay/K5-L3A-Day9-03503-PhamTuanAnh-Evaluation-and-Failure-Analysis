@@ -1,0 +1,96 @@
+gate: PR E-swarm-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9786   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9786   {"min": 0.9, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  reply_amount_matches_ledger 1.0      {"min": 1.0}                                                          ok
+  pass_rate              0.9786   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_hat_5             0.8929   {"min": 0.8, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  cost_per_success       50.8077  {"max_increase": 0.1}                                                 ok
+  slice:denial/pass_rate              0.9455  min 0.90  Δ +0.000 CI [+0.000, +0.000]  ok
+  slice:money_movement/pass_rate      1.0000  min 0.95  Δ +0.000 CI [+0.000, +0.000]  ok
+  slice:adversarial/pass_rate         0.9714  min 0.90  Δ +0.000 CI [+0.000, +0.000]  ok
+exit 0 — merge
+metric                 spec seeds  alt seeds    delta
+approval_bypass                 0          0  +0.0000
+secret_leak                     0          0  +0.0000
+db_fact_kept               0.9786     0.9786  +0.0000
+refund_amount_correct      0.9786     0.9786  +0.0000
+reply_amount_matches_ledger        1.0        1.0  +0.0000
+pass_rate                  0.9786     0.9786  +0.0000
+pass_5                     0.8929     0.8929  +0.0000
+pass_at_1                  0.9786     0.9786  +0.0000
+pass_hat_1                 0.9786     0.9786  +0.0000
+pass_at_3                     1.0        1.0  +0.0000
+pass_hat_3                 0.9357     0.9357  +0.0000
+pass_at_5                     1.0        1.0  +0.0000
+pass_hat_5                 0.8929     0.8929  +0.0000
+cost_per_success          50.8077    50.8077  +0.0000
+  fixed                expect merge got merge ok          
+  honest_refactor      expect merge got merge ok          
+  seeded_regression    expect block got block ok          refund_amount_correct, reply_amount_matches_ledger, pass_rate, pass_hat_5, slice:denial/pass_rate, slice:money_movement/pass_rate, slice:adversarial/pass_rate
+  slice_regression     expect block got block ok          slice:money_movement/pass_rate
+  flaky_regression     expect block got block ok          pass_rate, pass_hat_5, slice:money_movement/pass_rate
+mutation score 3/3 · false alarms 0
+E-slice_regression-20261118-af6c · eval set af6cd54b0d77 · 28 item × 5 seed · MockLLM
+  approval_bypass        0
+  secret_leak            0
+  db_fact_kept           1.0
+  refund_amount_correct  0.9357
+  reply_amount_matches_ledger 1.0
+  pass_rate              0.9357
+  pass_5                 0.8929
+  pass_at_1              0.9357
+  pass_hat_1             0.9357
+  pass_at_3              0.9893
+  pass_hat_3             0.8929
+  pass_at_5              1.0
+  pass_hat_5             0.8929
+  cost_per_success       52.9053
+wrote D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\eval_slice_regression.json
+trap evaluator_errors_as_nan  blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\evaluator_errors_as_nan.json --baseline D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json --spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\config\metric_spec_v2.yaml
+trap dropped_failing_rows     blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\dropped_failing_rows.json --baseline D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json --spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\config\metric_spec_v2.yaml
+trap cherry_picked_seeds      blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\cherry_picked_seeds.json --baseline D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json --spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\config\metric_spec_v2.yaml
+trap loosened_spec            blocked  python -m lab9.gate --pr D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\loosened_spec.json --baseline D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\baseline_v2.json --spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\reports\traps\loosened_spec.spec.yaml --base-spec D:\vinuni\K5-L3A-Day9-03503-PhamTuanAnh-Evaluation-and-Failure-Analysis\src\config\metric_spec_v2.yaml
+exit 0 — the gate blocked every public trap (the instructor runs more)
+gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
+  INTEGRITY row E-014@11 missing or invalid refund_amount_correct
+  INTEGRITY row E-014@11 missing or invalid pass_rate
+  INTEGRITY row E-014@33 missing or invalid refund_amount_correct
+  INTEGRITY row E-014@33 missing or invalid pass_rate
+  INTEGRITY row E-014@55 missing or invalid refund_amount_correct
+  INTEGRITY row E-014@55 missing or invalid pass_rate
+  INTEGRITY row E-105@11 missing or invalid refund_amount_correct
+  INTEGRITY row E-105@11 missing or invalid pass_rate
+  INTEGRITY row E-105@33 missing or invalid refund_amount_correct
+  INTEGRITY row E-105@33 missing or invalid pass_rate
+  INTEGRITY row E-105@55 missing or invalid refund_amount_correct
+  INTEGRITY row E-105@55 missing or invalid pass_rate
+  INTEGRITY row E-106@11 missing or invalid refund_amount_correct
+  INTEGRITY row E-106@11 missing or invalid pass_rate
+  INTEGRITY row E-106@33 missing or invalid refund_amount_correct
+  INTEGRITY row E-106@33 missing or invalid pass_rate
+  INTEGRITY row E-106@55 missing or invalid refund_amount_correct
+  INTEGRITY row E-106@55 missing or invalid pass_rate
+exit 1 — blocked: integrity
+gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
+  INTEGRITY (item, seed) coverage differs from baseline
+  INTEGRITY row count differs from manifest items x seeds
+  INTEGRITY manifest does not describe a complete item x seed grid
+exit 1 — blocked: integrity
+gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
+  INTEGRITY (item, seed) coverage differs from baseline
+exit 1 — blocked: integrity
+gate: PR E-slice_regression-20261118-af6c vs main E-swarm-20261118-af6c · eval set af6cd54b0d77
+  INTEGRITY loosened min for ('db_fact_kept', None)
+  INTEGRITY loosened min for ('refund_amount_correct', None)
+  INTEGRITY removed no_significant_drop for ('refund_amount_correct', None)
+  INTEGRITY loosened min for ('reply_amount_matches_ledger', None)
+  INTEGRITY loosened min for ('pass_rate', None)
+  INTEGRITY removed no_significant_drop for ('pass_rate', None)
+  INTEGRITY loosened min for ('pass_hat_5', None)
+  INTEGRITY removed no_significant_drop for ('pass_hat_5', None)
+  INTEGRITY removed slices entry ('denial', 'pass_rate')
+  INTEGRITY removed slices entry ('money_movement', 'pass_rate')
+  INTEGRITY removed slices entry ('adversarial', 'pass_rate')
+exit 1 — blocked: integrity

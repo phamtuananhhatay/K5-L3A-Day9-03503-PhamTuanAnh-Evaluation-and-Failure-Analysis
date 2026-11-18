@@ -57,3 +57,17 @@ def test_check_rejects_missing_tags(tmp_path, evalset_cli):
     result = evalset_cli("--check")
     assert result.returncode == 1, result.stdout + result.stderr
     assert "failure_modes empty" in result.stdout
+
+
+def test_eval_set_sha_is_stable_across_git_line_endings(tmp_path):
+    from lab9.evalset import sha12
+
+    items = tmp_path / "eval_set.jsonl"
+    items.write_bytes(b'{"item_id": "E-001"}\n')
+    original_sha = sha12(items)
+
+    items.write_bytes(b'{"item_id": "E-001"}\r\n')
+    assert sha12(items) == original_sha
+
+    items.write_bytes(b'{"item_id": "E-002"}\r\n')
+    assert sha12(items) != original_sha

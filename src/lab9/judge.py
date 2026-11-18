@@ -34,7 +34,7 @@ def calibrate(path: Path) -> dict:
            "confusion": cm, "observed_fail_rate": round(obs, 3),
            "corrected_fail_rate": round(stats.rogan_gladen(obs, r, spec), 3),
            "disagreements": [x for x, h, j in zip(rows, human, judge) if h != j]}
-    res["passed"] = all(res[m] >= f for m, f in FLOORS.items())   # nan compares False -> fails
+    res["passed"] = k >= FLOORS["kappa"] and p >= FLOORS["precision"] and r >= FLOORS["recall"]
     return res
 
 

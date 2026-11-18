@@ -35,19 +35,36 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 
 
 def sha12(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()[:12]
+    # Git can check out the same JSONL with CRLF on Windows and LF on Linux.
+    content = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(content).hexdigest()[:12]
 
 
 def build(source: Path = SOURCE) -> tuple[int, int]:
     claims = load_jsonl(source)
     items, labels = [], {}
+    CLAIM_FM_MAP = {
+        "C-001": ["FM-01"],
+        "C-002": ["FM-03"],
+        "C-003": ["FM-01"],
+        "C-004": ["FM-05"],
+        "C-005": ["FM-01", "FM-09"],
+        "C-006": ["FM-06"],
+        "C-007": ["FM-02"],
+        "C-008": ["FM-08"],
+        "C-009": ["FM-02", "FM-05"],
+        "C-010": ["FM-01"],
+        "C-011": ["FM-04"],
+        "C-012": ["FM-05"],
+        "C-013": ["FM-07"],
+        "C-014": ["FM-04"],
+    }
     for n, claim in enumerate(claims, start=1):
         item_id = f"E-{n:03d}"
         items.append({
             "item_id": item_id,
             "claim_id": claim["claim_id"],
-            # TODO M1: replace [] with the FM-xx codes from your taxonomy that this item exercises.
-            "failure_modes": [],
+            "failure_modes": CLAIM_FM_MAP.get(claim["claim_id"], []),
             "provenance": {"source": "lab8_public", "matrix_id": claim.get("matrix_id"),
                            "from_trace": None, "generator": None,
                            "label_by": "lab8_matrix", "checked_by": None},
@@ -76,7 +93,7 @@ def slices_for(expected: dict[str, Any], adversarial: bool) -> list[str]:
 
 
 def build_v2(items_v1: Path = ITEMS, labels_v1: Path = LABELS, pack: Path = PACK,
-             fm_map: Path = FM_MAP) -> tuple[int, int]:
+             fm_map: Path = FM_MAP, *, public_claims: Path = SOURCE) -> tuple[int, int]:
     """v2 = your v1 items (with YOUR failure_modes from M1) + the instructor's adversarial pack.
     Pack items name an attack *mechanism*; config/fm_map.yaml translates it to your FM code."""
     import yaml
@@ -85,6 +102,16 @@ def build_v2(items_v1: Path = ITEMS, labels_v1: Path = LABELS, pack: Path = PACK
     labels = json.loads(labels_v1.read_text(encoding="utf-8"))
     p = json.loads(pack.read_text(encoding="utf-8"))
     items = [{**it, "eval_set_version": "v2", "slices": slices_for(labels[it["claim_id"]], False)} for it in base]
+    # The pack adds claims that a batch refund could affect through an existing public claim.
+    sibling_orders = {(c["principal_id"], c["order_id"]) for c in p["claims"]
+                      if c.get("order_id") and "sibling_refund" in c["mechanisms"]}
+    sibling_mode = mapping.get("sibling_refund")
+    if sibling_orders and sibling_mode:
+        sibling_ids = {c["claim_id"] for c in load_jsonl(public_claims)
+                       if (c.get("principal_id"), c.get("order_id")) in sibling_orders}
+        for item in items:
+            if item["claim_id"] in sibling_ids and sibling_mode not in item["failure_modes"]:
+                item["failure_modes"].append(sibling_mode)
     for claim in p["claims"]:
         items.append({
             "item_id": f"E-{claim['claim_id'][2:]}",   # C-105 -> E-105
@@ -147,7 +174,7 @@ def check(items_path: Path = ITEMS, labels_path: Path = LABELS) -> list[str]:
         attacked = {fm for it in items if it.get("split") == "adversarial" for fm in it.get("failure_modes") or []}
         count: dict[str, int] = {}
         for item in items:
-            for fm in item.get("failure_modes") or []:
+            for fm in set(item.get("failure_modes") or []):
                 count[fm] = count.get(fm, 0) + 1
         problems += [f"{fm}: only {c} item(s) in v2, need >= {MIN_PER_MODE_V2}"
                      for fm, c in sorted(count.items()) if fm in attacked and c < MIN_PER_MODE_V2]

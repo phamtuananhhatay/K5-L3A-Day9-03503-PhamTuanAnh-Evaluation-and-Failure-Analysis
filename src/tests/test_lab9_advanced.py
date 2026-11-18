@@ -26,9 +26,10 @@ def test_pass_hat_k(stats, n, c, k, want):
 
 
 def test_pass_k_rejects_bad_args(stats):
-    for args in [(5, 6, 1), (5, 2, 0), (3, 1, 4)]:
-        with pytest.raises(ValueError):
-            stats.pass_at_k(*args)
+    for args in [(5, 6, 1), (5, 2, 0), (3, 1, 4), (5, -1, 1), (5, 2.5, 1)]:
+        for estimator in (stats.pass_at_k, stats.pass_hat_k):
+            with pytest.raises(ValueError):
+                estimator(*args)
 
 
 def _report(rows, metrics, items=4, seeds=(1, 2)):
@@ -63,6 +64,24 @@ def test_integrity_flags_loosened_spec():
     assert gate.integrity_check(base, base, SPEC, SPEC) == []
 
 
+@pytest.mark.parametrize("corruption", ["missing", "nan", "duplicate", "threshold_removed"])
+def test_integrity_rejects_incomplete_evidence(corruption):
+    from lab9 import gate
+
+    base = _report(copy.deepcopy(ROWS), {"pass_rate": 1.0})
+    report = copy.deepcopy(base)
+    spec = copy.deepcopy(SPEC)
+    if corruption == "missing":
+        report["rows"][0].pop("pass_rate")
+    elif corruption == "nan":
+        report["rows"][0]["pass_rate"] = float("nan")
+    elif corruption == "duplicate":
+        report["rows"].append(copy.deepcopy(report["rows"][0]))
+    else:
+        spec["metrics"][0]["threshold"].pop("min")
+    assert gate.integrity_check(report, base, spec, SPEC)
+
+
 def test_slice_check_blocks_a_slice_below_floor():
     from lab9 import gate
 
@@ -74,3 +93,18 @@ def test_slice_check_blocks_a_slice_below_floor():
     spec = dict(SPEC, slices=[{"name": "denial", "metric": "pass_rate", "min": 0.9, "blocking": True}])
     blocked, _ = gate.slice_check(_report(rows, {"pass_rate": 0.75}), base, spec)
     assert blocked == ["slice:denial/pass_rate"]
+
+
+def test_slice_check_blocks_significant_drop_even_above_floor():
+    from lab9 import gate
+
+    base = _report(copy.deepcopy(ROWS), {"pass_rate": 1.0})
+    rows = copy.deepcopy(ROWS)
+    for row in rows:
+        if "denial" in row["slices"] and row["seed"] == 1:
+            row["pass_rate"] = False
+    spec = dict(SPEC, slices=[{"name": "denial", "metric": "pass_rate", "min": 0.4,
+                               "no_significant_drop": True, "blocking": True}])
+    blocked, lines = gate.slice_check(_report(rows, {"pass_rate": 0.75}), base, spec)
+    assert blocked == ["slice:denial/pass_rate"]
+    assert "CI [-0.500, -0.500]" in lines[0]
